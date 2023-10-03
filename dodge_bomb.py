@@ -1,3 +1,4 @@
+import time
 import random
 import sys
 import pygame as pg
@@ -25,6 +26,8 @@ def chack_bound(obj_rct: pg.Rect):
     if obj_rct.top < 0 or HEIGHT < obj_rct.bottom: # 縦方向判定
         tate = False
     return yoko, tate
+
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -46,15 +49,23 @@ def main():
     clock = pg.time.Clock()
     tmr = 0
     while True:
+        c_chack = True
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
             
+        screen.blit(bg_img, [0, 0])
+        
         if kk_rct.colliderect(bd_rct): # 練習5 ぶつかった判定
             print("game over")
+            kk_img = pg.image.load("ex02/fig/8.png") # 演習3 泣いてる画像の読み込み
+            kk_img = pg.transform.rotozoom(kk_img, 0, 2.0) 
+            screen.blit(kk_img,kk_rct)
+            pg.display.update()
+            time.sleep(3) # 演習3 時間の停止
             return
+                       
         
-        screen.blit(bg_img, [0, 0])
 
         """こうかとん"""
         
@@ -67,6 +78,9 @@ def main():
         kk_rct.move_ip(sum_mv[0], sum_mv[1]) # 練習3 移動
         if chack_bound(kk_rct) != (True, True): # 練習4 はみ出し判定
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
+
+
+
         screen.blit(kk_img, kk_rct) # 練習3 移動後の表示
         
         """ばくだん"""
@@ -79,7 +93,7 @@ def main():
             vy *= -1
         pg.display.update()
         tmr += 1
-        clock.tick(25)
+        clock.tick(50)
 
 
 if __name__ == "__main__":
