@@ -18,6 +18,7 @@ def main():
     bd_rct = bd_img.get_rect() #Rectの取得
     x, y = random.randint(0, WIDTH), random.randint(0,HEIGHT)#移動範囲の指定
     bd_rct.center = (x, y)
+    vx, vy = +5, +5 
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -28,9 +29,10 @@ def main():
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, [900, 400])
         screen.blit(bd_img, bd_rct) #練習1
+        bd_rct.move_ip(vx, vy)
         pg.display.update()
         tmr += 1
-        clock.tick(10)
+        clock.tick(25)
 
 
 if __name__ == "__main__":
