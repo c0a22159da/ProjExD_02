@@ -1,8 +1,9 @@
+import random
 import sys
 import pygame as pg
 
 
-WIDTH, HEIGHT = 1200, 500
+WIDTH, HEIGHT = 1600, 900
 
 
 def main():
@@ -11,6 +12,12 @@ def main():
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    bd_img = pg.Surface((20, 20))#爆弾の生成
+    bd_img.set_colorkey((0, 0, 0))
+    pg.draw.circle(bd_img, (255, 0, 0), (10, 10), 10)#爆弾の生成
+    bd_rct = bd_img.get_rect() #Rectの取得
+    x, y = random.randint(0, WIDTH), random.randint(0,HEIGHT)#移動範囲の指定
+    bd_rct.center = (x, y)
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -20,6 +27,7 @@ def main():
 
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, [900, 400])
+        screen.blit(bd_img, bd_rct) #練習1
         pg.display.update()
         tmr += 1
         clock.tick(10)
