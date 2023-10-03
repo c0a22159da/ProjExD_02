@@ -46,17 +46,26 @@ def main():
     bd_rct.center = (x, y)
     vx, vy = +5, +5 
 
+    """ばくだん2"""
+    bd2_img = pg.Surface((20, 20))#爆弾の生成
+    bd2_img.set_colorkey((0, 0, 0))
+    pg.draw.circle(bd2_img, (255, 0, 0), (10, 10), 10)#爆弾の生成
+    bd2_rct = bd2_img.get_rect() #Rectの取得
+    x2, y2 = random.randint(0, WIDTH), random.randint(0,HEIGHT)#移動範囲の指定
+    bd2_rct.center = (x2, y2)
+    vx2, vy2 = +5, +5 
+
+
     clock = pg.time.Clock()
     tmr = 0
     while True:
-        c_chack = True
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
             
         screen.blit(bg_img, [0, 0])
         
-        if kk_rct.colliderect(bd_rct): # 練習5 ぶつかった判定
+        if kk_rct.colliderect(bd_rct) or kk_rct.colliderect(bd2_rct): # 練習5 + 演習5 ぶつかった判定
             print("game over")
             kk_img = pg.image.load("ex02/fig/8.png") # 演習3 泣いてる画像の読み込み
             kk_img = pg.transform.rotozoom(kk_img, 0, 2.0) 
@@ -91,6 +100,16 @@ def main():
             vx *= -1
         if not tate: # 練習4 縦方向の判定
             vy *= -1
+
+        """ばくだん２"""
+        if tmr >= 100: # 演習5 時間経過による2つ目のばくだんの追加
+            screen.blit(bd2_img, bd2_rct) #練習1
+            bd2_rct.move_ip(vx2, vy2)
+            yoko2, tate2 = chack_bound(bd2_rct)
+            if not yoko2: # 演習5 横方向の判定
+                vx2 *= -1
+            if not tate2: # 演習5 縦方向の判定
+                vy2 *= -1
         pg.display.update()
         tmr += 1
         clock.tick(50)
