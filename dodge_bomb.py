@@ -53,7 +53,7 @@ def main():
     bd2_rct = bd2_img.get_rect() #Rectの取得
     x2, y2 = random.randint(0, WIDTH), random.randint(0,HEIGHT)#移動範囲の指定
     bd2_rct.center = (x2, y2)
-    vx2, vy2 = +5, +5 
+    vx2, vy2 = +2, +2 
 
 
     clock = pg.time.Clock()
